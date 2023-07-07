@@ -1,11 +1,14 @@
 #ifndef POLYPHONYMANAGER_H
 #define POLYPHONYMANAGER_H
 
+#ifndef MAX_POLYPHONY
+#define MAX_POLYPHONY (6)
+#endif
+
 #include "WavetableReader.h"
 #include "Logger.h"
 
-const static size_t MAX_NOTES = 8;
-const static float maxNoteAmplitude = 1.0f/MAX_NOTES;
+const static float maxNoteAmplitude = 1.0f/MAX_POLYPHONY;
 
 class PolyphonyManager {
   public:
@@ -30,7 +33,7 @@ class PolyphonyManager {
       
       float amplitude;
       bool sampleIncremented;
-      for (size_t i = 0; i < MAX_NOTES; i++) {
+      for (size_t i = 0; i < MAX_POLYPHONY; i++) {
         if (notes[i].free) continue;
 
         // Update envelope
@@ -78,7 +81,7 @@ class PolyphonyManager {
       uint32_t oldestNoteTime = 0xFFFFFFFF;
       size_t oldestNoteIndex = 0;
       
-      for (size_t i = 0; i < MAX_NOTES; i++) {
+      for (size_t i = 0; i < MAX_POLYPHONY; i++) {
         const Note note = notes[i];
         if (note.free) return i;
         if (note.time < oldestNoteTime) {
@@ -96,12 +99,12 @@ class PolyphonyManager {
       note.sampleIndex = 0;
     }
 
-    static Note notes[MAX_NOTES];
+    static Note notes[MAX_POLYPHONY];
     static uint16_t sampleRate;
     static size_t wavetableSize;
 };
 
-PolyphonyManager::Note PolyphonyManager::notes[MAX_NOTES];
+PolyphonyManager::Note PolyphonyManager::notes[MAX_POLYPHONY];
 uint16_t PolyphonyManager::sampleRate = 1;
 size_t PolyphonyManager::wavetableSize = 1;
 

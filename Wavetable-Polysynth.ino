@@ -1,3 +1,5 @@
+#define MAX_POLYPHONY (6)
+
 #include "PolyphonyManager.h"
 #include "WavetableReader.h"
 #include "Wavetable.h"
@@ -76,7 +78,7 @@ void loop() {
     noteNext = random(1, 9) * 250;
     PolyphonyManager::addNote(
       notes[random(noteCount)], // freq
-      static_cast<uint32_t>(noteNext * (sampleRate / 1000.0f) * random(2, 5)), // duration
+      static_cast<uint32_t>(noteNext * (sampleRate / 1000.0f) * random(2, 4)), // duration
       random(4, 13) / 16.0f // pan
     );
     noteLast = now;
